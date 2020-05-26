@@ -108,7 +108,7 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
+    agentSlope: 0
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
@@ -120,7 +120,7 @@ NavMeshSettings:
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: 90d394e27d777354193b7fc5ecd5952e, type: 2}
 --- !u!1 &32658029
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,8 +138,8 @@ GameObject:
   m_Name: TriggerNearIsland5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &32658030
 Transform:
@@ -280,8 +280,8 @@ GameObject:
   m_Name: Dock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &58938108
 Transform:
@@ -374,8 +374,8 @@ GameObject:
   m_Name: TriggerNearIsland4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &68072160
 Transform:
@@ -510,8 +510,8 @@ GameObject:
   m_Name: TriggerNearIsland2.3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &90903877
 Transform:
@@ -723,8 +723,8 @@ GameObject:
   m_Name: Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &194304270
 Transform:
@@ -893,6 +893,7 @@ GameObject:
   - component: {fileID: 329620539}
   - component: {fileID: 329620541}
   - component: {fileID: 329620540}
+  - component: {fileID: 329620542}
   m_Layer: 0
   m_Name: Enemy1
   m_TagString: Enemy
@@ -924,7 +925,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329620537}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b104abcb4077dcb439e2429ff74be2c1, type: 3}
   m_Name: 
@@ -960,7 +961,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329620537}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b22aeb34bf611514fadd3a2819e852f6, type: 3}
   m_Name: 
@@ -968,6 +969,28 @@ MonoBehaviour:
   bullet: {fileID: 3439918964515476787, guid: 9bc75f02d3588e5458e25360fe220e4c, type: 3}
   bulletStartPos: {fileID: 1235997258}
   shootFlag: 0
+--- !u!195 &329620542
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329620537}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 10
+  m_Speed: 25
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 3
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &408443024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,8 +1086,8 @@ GameObject:
   m_Name: Dock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &412767248
 Transform:
@@ -1752,8 +1775,8 @@ GameObject:
   m_Name: TriggerNearIsland2.2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &516053182
 Transform:
@@ -2143,8 +2166,8 @@ GameObject:
   m_Name: TriggerNearIsland3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &612733835
 Transform:
@@ -3974,8 +3997,8 @@ GameObject:
   m_Name: Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1223774697
 Transform:
@@ -4766,8 +4789,8 @@ GameObject:
   m_Name: FinishTargetPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1321069701
 Transform:
@@ -5776,8 +5799,8 @@ GameObject:
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1636494333
 Transform:
@@ -6141,8 +6164,8 @@ GameObject:
   m_Name: Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1798081423
 Transform:
@@ -6947,8 +6970,8 @@ GameObject:
   m_Name: TriggerNearIsland2.1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &1985789896
 Transform:
@@ -7048,6 +7071,7 @@ GameObject:
   - component: {fileID: 1989857412}
   - component: {fileID: 1989857413}
   - component: {fileID: 1989857411}
+  - component: {fileID: 1989857414}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Enemy
@@ -7115,7 +7139,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1989857409}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b22aeb34bf611514fadd3a2819e852f6, type: 3}
   m_Name: 
@@ -7123,6 +7147,28 @@ MonoBehaviour:
   bullet: {fileID: 3439918964515476787, guid: 9bc75f02d3588e5458e25360fe220e4c, type: 3}
   bulletStartPos: {fileID: 1593165464}
   shootFlag: 0
+--- !u!195 &1989857414
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1989857409}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 10
+  m_Speed: 25
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 3
+  m_BaseOffset: 5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2009244874
 GameObject:
   m_ObjectHideFlags: 0
@@ -7140,8 +7186,8 @@ GameObject:
   m_Name: TriggerNearIsland1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &2009244875
 Transform:
@@ -7473,8 +7519,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052461740}
-  m_LocalRotation: {x: -0.03408031, y: 0.26600707, z: 0.009548103, w: 0.96332115}
-  m_LocalPosition: {x: -3.897839, y: -5.4049215, z: -606.85785}
+  m_LocalRotation: {x: -0.06448446, y: -0, z: -0, w: 0.9979187}
+  m_LocalPosition: {x: 0, y: -7.9700003, z: -623.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 496769872}

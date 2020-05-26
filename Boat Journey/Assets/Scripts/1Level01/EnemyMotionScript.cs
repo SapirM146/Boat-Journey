@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 
 public class EnemyMotionScript : MonoBehaviour
@@ -11,6 +12,7 @@ public class EnemyMotionScript : MonoBehaviour
     Rigidbody rb;
     RaycastHit rayHit;
     Ray sight;
+    NavMeshAgent agent;
 
     public float speed = 25f;
     float rotationSpeed = 5f;
@@ -25,17 +27,19 @@ public class EnemyMotionScript : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
         target = waypoints[currentWayPoint];
         player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void FixedUpdate()
     {
-        moveDirection = target.position - transform.position;
+        //moveDirection = target.position - transform.position;
+        agent.SetDestination(target.position);
 
         // Rotation animation
-        Quaternion rotation = Quaternion.LookRotation(moveDirection);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
+        //Quaternion rotation = Quaternion.LookRotation(moveDirection);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
         
         sight.origin = transform.position;
         sight.direction = transform.forward;
@@ -54,8 +58,10 @@ public class EnemyMotionScript : MonoBehaviour
 
         if (!isPlayerDetected)
         {
-            if (moveDirection.magnitude < 1)
+            //if (moveDirection.magnitude < 1)
+            if (agent.remainingDistance <= agent.stoppingDistance)
             {
+                Debug.Log("Change " + agent.remainingDistance);
                 currentWayPoint = ++currentWayPoint % waypoints.Length;
                 target = waypoints[currentWayPoint];
             }
@@ -64,6 +70,7 @@ public class EnemyMotionScript : MonoBehaviour
         else // Player detected
         {
             float playerDis = Vector3.Distance(player.position, transform.position);
+            agent.stoppingDistance = 10f;
 
             if (playerDis < 40f)
                 speed = 0f;
@@ -74,13 +81,14 @@ public class EnemyMotionScript : MonoBehaviour
             else // playerDis > maxDistance
             {
                 lostTextAnim.SetTrigger("LostPlayer");
+                agent.stoppingDistance = 0f;
                 speed = 25f;
                 target = waypoints[currentWayPoint];
                 isPlayerDetected = false;
             }
         }
 
-        rb.velocity = moveDirection.normalized * speed;
+        //rb.velocity = moveDirection.normalized * speed;
     }
 
 }
