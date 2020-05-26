@@ -8,14 +8,13 @@ public class EnemyMotionScript : MonoBehaviour
 {
     public Transform[] waypoints;
     Transform player, target;
-    Vector3 moveDirection;
-    Rigidbody rb;
+    //Rigidbody rb;
     RaycastHit rayHit;
     Ray sight;
     NavMeshAgent agent;
 
-    public float speed = 25f;
-    float rotationSpeed = 5f;
+    //public float speed = 25f;
+    //float rotationSpeed = 5f;
     int currentWayPoint;
     public bool isPlayerDetected = false;
     float maxDistance = 150f;
@@ -26,21 +25,62 @@ public class EnemyMotionScript : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         agent = GetComponent<NavMeshAgent>();
-        target = waypoints[currentWayPoint];
+        agent.autoBraking = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        GotoNextPoint();
+    }
+
+    private void Update()
+    {
+        // Choose the next destination point when the agent gets
+        // close to the current one.
+        if (!isPlayerDetected && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        //if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+            GotoNextPoint();
+        
+
+        else if(isPlayerDetected) // Player detected
+        {
+            float playerDis = Vector3.Distance(player.position, transform.position);
+            //float playerDis = agent.remainingDistance;
+            agent.SetDestination(player.position);
+
+            Debug.Log("To player: " + agent.remainingDistance);
+
+            //if (playerDis < 40f)
+            //    speed = 0f;
+
+            if (playerDis < maxDistance)
+                agent.speed = 30f;
+
+            if (playerDis > maxDistance) // playerDis > maxDistance
+            {
+                lostTextAnim.SetTrigger("LostPlayer");
+                agent.stoppingDistance = 5f;
+                agent.speed = 25f;
+                //target = waypoints[currentWayPoint];
+                isPlayerDetected = false;
+                agent.autoBraking = false;
+                GotoNextPoint();
+            }
+        }
+    }
+
+    void GotoNextPoint()
+    {
+        if (waypoints.Length == 0)
+            return;
+
+        // Set the agent to go to the currently selected destination.
+        agent.SetDestination(waypoints[currentWayPoint].position);
+
+        currentWayPoint = (currentWayPoint + 1) % waypoints.Length;
     }
 
     private void FixedUpdate()
     {
-        //moveDirection = target.position - transform.position;
-        agent.SetDestination(target.position);
-
-        // Rotation animation
-        //Quaternion rotation = Quaternion.LookRotation(moveDirection);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
-        
         sight.origin = transform.position;
         sight.direction = transform.forward;
 
@@ -50,45 +90,12 @@ public class EnemyMotionScript : MonoBehaviour
             if (!isPlayerDetected && rayHit.collider.CompareTag("PlayerBody"))
             {
                 isPlayerDetected = true;
-                target = player;
+                agent.autoBraking = true;
+                agent.stoppingDistance = 40f;
+                //agent.SetDestination(player.position);
                 foundTextAnim.SetTrigger("FoundPlayer");
             }
-        }
-
-
-        if (!isPlayerDetected)
-        {
-            //if (moveDirection.magnitude < 1)
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                Debug.Log("Change " + agent.remainingDistance);
-                currentWayPoint = ++currentWayPoint % waypoints.Length;
-                target = waypoints[currentWayPoint];
-            }
-        }
-
-        else // Player detected
-        {
-            float playerDis = Vector3.Distance(player.position, transform.position);
-            agent.stoppingDistance = 10f;
-
-            if (playerDis < 40f)
-                speed = 0f;
-
-            else if (playerDis < maxDistance)
-                speed = 30f;
-
-            else // playerDis > maxDistance
-            {
-                lostTextAnim.SetTrigger("LostPlayer");
-                agent.stoppingDistance = 0f;
-                speed = 25f;
-                target = waypoints[currentWayPoint];
-                isPlayerDetected = false;
-            }
-        }
-
-        //rb.velocity = moveDirection.normalized * speed;
+        }   
     }
 
 }
