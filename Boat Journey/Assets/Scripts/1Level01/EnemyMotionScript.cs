@@ -7,17 +7,15 @@ using UnityEngine.AI;
 public class EnemyMotionScript : MonoBehaviour
 {
     public Transform[] waypoints;
-    Transform player, target;
-    //Rigidbody rb;
+    Transform player;
     RaycastHit rayHit;
     Ray sight;
     NavMeshAgent agent;
 
-    //public float speed = 25f;
-    //float rotationSpeed = 5f;
     int currentWayPoint;
     public bool isPlayerDetected = false;
     float maxDistance = 150f;
+    float lostDistance;
 
     public Animator foundTextAnim;
     public Animator lostTextAnim;
@@ -26,6 +24,7 @@ public class EnemyMotionScript : MonoBehaviour
     private void Start()
     {
         //rb = GetComponent<Rigidbody>();
+        lostDistance = maxDistance + 20f;
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -37,35 +36,7 @@ public class EnemyMotionScript : MonoBehaviour
         // Choose the next destination point when the agent gets
         // close to the current one.
         if (!isPlayerDetected && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
-        //if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
             GotoNextPoint();
-        
-
-        else if(isPlayerDetected) // Player detected
-        {
-            float playerDis = Vector3.Distance(player.position, transform.position);
-            //float playerDis = agent.remainingDistance;
-            agent.SetDestination(player.position);
-
-            Debug.Log("To player: " + agent.remainingDistance);
-
-            //if (playerDis < 40f)
-            //    speed = 0f;
-
-            if (playerDis < maxDistance)
-                agent.speed = 30f;
-
-            if (playerDis > maxDistance) // playerDis > maxDistance
-            {
-                lostTextAnim.SetTrigger("LostPlayer");
-                agent.stoppingDistance = 5f;
-                agent.speed = 25f;
-                //target = waypoints[currentWayPoint];
-                isPlayerDetected = false;
-                agent.autoBraking = false;
-                GotoNextPoint();
-            }
-        }
     }
 
     void GotoNextPoint()
@@ -91,11 +62,39 @@ public class EnemyMotionScript : MonoBehaviour
             {
                 isPlayerDetected = true;
                 agent.autoBraking = true;
-                agent.stoppingDistance = 40f;
-                //agent.SetDestination(player.position);
+                agent.stoppingDistance = 70f;
                 foundTextAnim.SetTrigger("FoundPlayer");
+                agent.SetDestination(player.position);
             }
-        }   
+        }
+
+
+        if (isPlayerDetected && !agent.pathPending)
+        {
+            //float playerDis = Vector3.Distance(player.position, transform.position);
+            float playerDis = agent.remainingDistance;
+            
+            //Debug.Log("remainingDistance To player: " + agent.remainingDistance);
+            //Debug.Log("playerDis To player: " + playerDis);
+
+            if (playerDis <= agent.stoppingDistance)
+                transform.LookAt(player);
+
+            else if (playerDis < lostDistance)
+                agent.speed = 30f;
+
+            else // playerDis > lostDistance
+            {
+                lostTextAnim.SetTrigger("LostPlayer");
+                agent.stoppingDistance = 5f;
+                agent.speed = 25f;
+                isPlayerDetected = false;
+                agent.autoBraking = false;
+                GotoNextPoint();
+            }
+
+            agent.SetDestination(player.position);
+        }
     }
 
 }
